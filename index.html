@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Envelope + Letter (Open/Close on Click)</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="text">
+                        <strong>Mi estrella hermosa</strong>
+                        <p id="messageText">Cargando frase...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="heart"></div>
+        </div>
+    </div>
+    <script>
+        const envelope = document.querySelector('.envelope-wrapper');
+        const messageText = document.getElementById('messageText');
+        const phrases = [
+            "Tienes la voz más tierna, los ojos más bellos, y una sonrisa que hipnotiza.",
+            "¿Sabías que las mariposas no pueden ver sus propias alas? Por eso no se dan cuenta de lo hermosas que son. Tal vez seas una mariposa.",
+            "Si pudiera quitarte el dolorcito que cargas dentro de ti y ponerlo en mí, lo haría una y mil veces. Siempre voy a cuidarte y protegerte.",
+            "Eres el sol en una tormenta, la calma que llega en medio del caos, la sonrisa que ilumina rincones donde nunca llega la luz.",
+            "Ella dice que no es perfecta, pero es tierna, cariñosa, sincera, alegre, ocurrente y con un gran corazón. Y eso... te hace tan perfecta.",
+            "Tu esencia es un poema escrito en cada línea de tu rostro, y en cada gesto se revela la poesía de la vida.",
+            "Eres el reflejo de todo lo que es hermoso en el mundo, como un sueño que cobra vida a través del amor.",
+            "Tus ojos reflejan el misterio del universo, y en cada mirada, el amor cobra vida.",
+            "Eres como un amanecer eterno que nunca deja de sorprenderme, iluminando mi mundo con solo existir.",
+            "La belleza de tu ser es la prueba de que el amor verdadero puede ser tan real como el susurro del viento.",
+            "Cada sonrisa tuya es un puente hacia el infinito, un destello de amor que el mundo no puede ignorar.",
+            "Tu amor es el refugio donde mi corazón encuentra paz, y tu belleza, la inspiración que ilumina mis días.",
+            "Eres la musa de mis pensamientos, el verso perfecto que mi alma anhelaba encontrar.",
+            "En el brillo de tus ojos, el amor encuentra su hogar, y mi alma, su propósito.",
+            "Eres la flor que embellece mi jardín interior, el amor que da sentido a cada instante.",
+            "Eres la paz que mi ser buscaba, el amor que llena cada espacio vacío con su luz.",
+            "En cada uno de tus gestos, el amor cobra vida, y en tu sonrisa, la belleza se convierte en poesía.",
+            "Eres la inspiración detrás de cada poema y la razón detrás de cada suspiro de amor.",
+            "Tu belleza trasciende lo que los ojos pueden ver; es un reflejo de la pureza de tu corazón.",
+            "Eres la dulzura de una caricia, la calma en la tempestad y el amor que da sentido a mi vida.",
+            "En tu mirada encuentro la serenidad que solo el amor verdadero puede ofrecer.",
+            "Eres el amanecer que ilumina mi vida, la belleza que da color a mi mundo y el amor que da vida a mi ser.",
+            "Tu belleza es un secreto que solo el amor puede comprender, un enigma que el corazón sabe descifrar.",
+            "Eres la esencia misma del amor, un ser tan único que en tu presencia el mundo se detiene.",
+            "En cada palabra tuya, el amor se vuelve tangible, y en cada sonrisa, la belleza se hace eterna.",
+            "Eres el equilibrio perfecto entre fortaleza y ternura, la armonía que el amor buscaba en el universo.",
+            "Tu belleza es el espejo en el que el amor se mira y descubre su esencia más pura.",
+            "Eres el jardín donde florecen mis sueños, la belleza que da color a mi vida y el amor que nutre mi alma.",
+            "Eres como un faro en la niebla, guiando mi corazón hacia un amor tan puro como tu esencia.",
+            "Tus ojos son el reflejo de la eternidad, y en ellos el amor se manifiesta en su forma más sublime.",
+            "Eres la flor que florece en el desierto, un milagro de belleza que el mundo admira en silencio.",
+            "Eres la paz en la tormenta de la vida, el amor que calma y embellece cada momento.",
+            "Eres la razón por la que la poesía existe; cada palabra intenta capturar lo que tu esencia transmite sin esfuerzo.",
+            "Eres como un misterio divino; cuanto más intento entenderte, más me pierdo en la maravilla de tu ser.",
+            "Tu sonrisa es la melodía que calma la tormenta, un rayo de luz que ilumina hasta los rincones más oscuros del alma.",
+            "La dulzura de tu risa es la esencia misma de la vida, el perfume de una flor en el jardín del tiempo.",
+            "Eres el secreto mejor guardado de la naturaleza, un enigma de belleza y amor que el mundo admira en silencio.",
+            "Eres el toque de arte que completa el lienzo del universo, una obra maestra en constante movimiento.",
+            "Tu presencia convierte cada momento en un milagro, y el amor que siento por ti, en una verdad absoluta.",
+            "Eres el verso eterno que el tiempo no puede borrar, la melodía de amor que mi corazón canta sin cesar.",
+            "Eres el color en un mundo en blanco y negro, una explosión de vida que llena de sentido mi existencia.",
+            "En cada rincón de tu ser, encuentro un motivo para amar, una razón para seguir soñando.",
+            "Eres el amanecer que ilumina mis sombras, el amor que trasciende el tiempo y el espacio.",
+            "Tu amor es el fuego que enciende mi alma, y tu belleza, la chispa que lo mantiene vivo.",
+            "Eres como un poema andante, una obra maestra que no necesita palabras para expresar su grandeza.",
+            "En el reflejo de tu alma, encuentro la pureza de lo eterno y la belleza de lo sagrado.",
+            "Tus ojos son como océanos profundos, reflejando la sabiduría de lo eterno y la calma de lo infinito.",
+            "Eres como la primavera que trae vida y color a todo lo que toca, iluminando incluso los días más grises.",
+            "Tu risa es el eco de la felicidad y el amor, una melodía que resuena en lo profundo de mi ser.",
+            "En el lienzo de la vida, eres el pincel que colorea mis días con alegría y pasión.",
+            "Eres la inspiración detrás de los más hermosos amaneceres, un recordatorio de que la belleza existe sin razón aparente.",
+            "Cada sonrisa tuya es como un amanecer, llenando mi vida de luz y esperanza sin necesidad de palabras.",
+            "Eres la flor en medio del desierto, la esperanza que renace en medio de la adversidad.",
+            "Eres el amanecer que ilumina mis sombras, el amor que trasciende el tiempo y el espacio.",
+            "Eres el equilibrio perfecto entre fortaleza y ternura, la armonía que el amor buscaba en el universo.",
+            "Eres el secreto mejor guardado de la naturaleza, un enigma de belleza y amor que el mundo admira en silencio.",
+            "Eres como un libro encantado que solo mi corazón sabe leer, y cada página es una promesa de más maravillas.",
+            "En cada rincón de tu ser, encuentro un motivo para amar, una razón para seguir soñando.",
+            "Te quiero de una forma tan bonita y sincera que no hace falta verte ni tocarte, para que mi amor por ti aumente, solo basta con cerrar mis ojos y saber que existes",
+            "Si tu fueras el sol, yo sería la luna, no para conquistarte, si no para verte como brillas mientras yo te miro desde la oscuridad",
+            "Eres bonita, eres bajita, tienes unos ojos preciosos, un cabello hermoso y una tan sonrisa encantadora",
+            "Si pudiera darte algo, sería la capacidad de verte a ti misma a través de mis ojos, así entenderías mi locura y mi amor hacia ti, y por supuesto, lo especial que eres"
+        ];
+
+        let usedPhrases = [];
+        function getRandomPhrase() {
+
+            if(usedPhrases.length === phrases.length){
+                usedPhrases = [];
+            }
+
+            const availablePhases = phrases.filter(phrase => !usedPhrases.includes(phrase));
+            const randomIndex = Math.floor(Math.random() * availablePhases.length);
+            const selectedPhrase = availablePhases[randomIndex];
+            
+
+            usedPhrases.push(selectedPhrase);
+            return selectedPhrase;
+        }
+
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('flap');
+            // Cambiar la frase solo si la carta se abre
+            if (envelope.classList.contains('flap')) {
+                messageText.textContent = getRandomPhrase();
+            }
+        });
+    </script>
+</body>
+</html>
